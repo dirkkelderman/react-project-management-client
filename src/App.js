@@ -23,7 +23,8 @@ class App extends React.Component {
   render(){
   return (
     <div className="App">
-    <Navbar user={this.state.loggedInUser}/>
+    <Navbar user={this.state.loggedInUser} getUser={this.getTheUser}/>
+    
     <Switch>
       <Route exact path="/signup" render={() => <Signup getUser={this.getTheUser}/>} />
       <Route exact path='/' render={() => <Login getUser={this.getTheUser}/>}/>

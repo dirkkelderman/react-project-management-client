@@ -1,14 +1,30 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import AuthService from '../auth/auth-service'
 
-export default function Navbar(props) {
+ class Navbar extends React.Component {
+
+    service = new AuthService();
+
+    logoutUser = () =>{
+        this.service.logout()
+        .then(() => {
+          this.props.getUser(null);  
+        })
+      }
+
+    render() {
     return (
       <div>
-        {props.user ? (
+        {this.props.user ? (
           <div>
-            <p>Welcome {props.user.username}</p>
+            <p>Welcome {this.props.user.username}</p>
             <br />
             <Link to="/projects">Projects</Link>
+            <br/>
+            <Link to='/'>
+                <button onClick={() => this.logoutUser()}>Logout</button>
+            </Link>
           </div>
         ) : (
           <div> 
@@ -18,3 +34,6 @@ export default function Navbar(props) {
       </div>
     );
 }
+}
+
+export default Navbar
