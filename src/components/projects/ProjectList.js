@@ -24,33 +24,30 @@ class ProjectList extends Component {
     this.getAllProjects();
   }
 
-  render(){
-    return(
-      <div>
-        <div style={{width: '60%', float:"left"}}>
-          { this.state.listOfProjects.map( project => {
-            return (
-              <div key={project._id}>
+  render() {
+
+    const projects = this.state.listOfProjects.map(project => {
+        return (
+            <div key={project._id}>
                 <Link to={`/projects/${project._id}`}>
-                  <h3>{project.title}</h3>
+                    <h4>{project.title}</h4>
                 </Link>
-                {/*  added so the tasks can be displayed:   */}
-                <ul>
-                  { project.tasks.map((task, index) => {
-                    return <li key={index}>{task.title}</li>
-                  }) }
-                </ul>  
-                {/* <p style={{maxWidth: '400px'}} >{project.description} </p> */}
-              </div>
-            )})
-          }
+            </div>
+        )
+    })
+
+    return (
+        <div>
+            <div>
+                {projects}
+            </div>
+            <div>
+                <hr />
+                <AddProject getData={() => this.getAllProjects()} />
+            </div>
         </div>
-        <div style={{width: '40%', float:"right"}}>
-            <AddProject getData={() => this.getAllProjects()}/> {/* <== !!! */}
-        </div>
-      </div>
     )
-  }
+}
 }
 
 export default ProjectList;
