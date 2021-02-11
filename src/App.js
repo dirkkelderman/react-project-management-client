@@ -6,6 +6,7 @@ import ProjectDetails from './components/projects/ProjectDetails';
 import TaskDetails from './components/tasks/TaskDetails'
 import Signup from './components/auth/Signup';
 import Navbar from './components/navbar/Navbar'
+import Login from './components/auth/Login'
 
 class App extends React.Component {
   
@@ -25,6 +26,7 @@ class App extends React.Component {
     <Navbar user={this.state.loggedInUser}/>
     <Switch>
       <Route exact path="/signup" render={() => <Signup getUser={this.getTheUser}/>} />
+      <Route exact path='/' render={() => <Login getUser={this.getTheUser}/>}/>
       <Route exact path='/projects' component={ProjectList} />
       <Route exact path='/projects/:id' component={ProjectDetails} />
       <Route exact path="/projects/:id/tasks/:taskId" component={TaskDetails} /> 

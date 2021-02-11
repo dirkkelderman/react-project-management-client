@@ -14,8 +14,8 @@ export class AddProject extends Component {
 
         axios.post('http://localhost:5000/api/projects', {
             title: this.state.title,
-            description: this.state.description
-        })
+            description: this.state.description,
+        }, {withCredentials: true})
         .then( (res) => {
                 this.props.getData();
                     this.setState({
