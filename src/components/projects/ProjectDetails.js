@@ -5,7 +5,15 @@ import EditProject from './EditProject'
 import AddTask from '../tasks/AddTask'
  
 class ProjectDetails extends Component {
-  state = {}
+
+  constructor(props){
+    super(props);
+    this.state = {
+      title: "",
+      description: "",
+      owner: ""
+    }
+  }
  
   componentDidMount(){
       this.getSingleProject();
@@ -16,11 +24,11 @@ class ProjectDetails extends Component {
       axios.get(`http://localhost:5000/api/projects/${params.id}`, {withCredentials: true})
       .then( responseFromApi =>{
 
-          const {title, description, _id} = responseFromApi.data;
+          const {title, description, owner} = responseFromApi.data;
           this.setState({
               title: title,
               description: description,
-              _id: _id
+              owner: owner
           });
       })
       .catch((err)=>{
@@ -63,25 +71,33 @@ class ProjectDetails extends Component {
       <div>
         <h1>{this.state.title}</h1>
         <p>{this.state.description}</p>
-        {/* show the task heading only if there are tasks */}
-        { this.state.tasks && this.state.tasks.length > 0 && <h3>Tasks </h3> }
-        {/* map through the array of tasks and... */}
-        { this.state.tasks && this.state.tasks.map((task, index) => {
-            return(
-                <div key={ index }>
-                {/* ... make each task's title a link that goes to the task details page */}
-                    <Link to={`/projects/${this.state._id}/tasks/${task._id}`}> 
-                        { task.title }
-                    </Link>
-                </div>
-            )
-            
-        }) }
-        <div>{this.renderEditForm()} </div>
-        <button onClick={() => this.deleteProject()}>Delete project</button> {/* <== !!! */}
-        <br/>
-        <div>{this.renderAddTaskForm()} </div>
-        <br/><br/><br/><br/><br/>
+
+        {
+          this.state.title !== "" && this.props.user && this.props.user._id === this.state.owner ? 
+
+          <div>
+            { this.state.tasks && this.state.tasks.length > 0 && <h3>Tasks </h3> }
+                    { this.state.tasks && this.state.tasks.map((task, index) => {
+                        return(
+                            <div key={ index }>
+                                <Link to={`/projects/${this.state._id}/tasks/${task._id}`}> 
+                                    { task.title }
+                                </Link>
+                            </div>
+                        )
+                        
+                    }) }
+                    <div>{this.renderEditForm()} </div>
+                    <button onClick={() => this.deleteProject()}>Delete project</button> {/* <== !!! */}
+                    <br/>
+                    <div>{this.renderAddTaskForm()} </div>
+                    <br/><br/><br/><br/><br/>
+          </div>
+          : null
+        }
+
+
+        
         <Link to={'/projects'}>Back to projects</Link>
       </div>
     )
