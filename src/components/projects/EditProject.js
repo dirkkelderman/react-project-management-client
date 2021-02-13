@@ -20,7 +20,7 @@ class EditProject extends Component {
     .then( () => {
         this.props.getTheProject();
         // after submitting the form, redirect to '/projects'
-        this.props.history.push('/projects');    
+        this.props.history.push('/');    
     }, error => console.log(error))
   }
 

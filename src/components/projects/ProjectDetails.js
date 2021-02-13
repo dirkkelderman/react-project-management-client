@@ -11,6 +11,7 @@ class ProjectDetails extends Component {
     this.state = {
       title: "",
       description: "",
+      _id:'',
       owner: ""
     }
   }
@@ -24,10 +25,11 @@ class ProjectDetails extends Component {
       axios.get(`http://localhost:5000/api/projects/${params.id}`, {withCredentials: true})
       .then( responseFromApi =>{
 
-          const {title, description, owner} = responseFromApi.data;
+          const {title, description, owner, _id} = responseFromApi.data;
           this.setState({
               title: title,
               description: description,
+              _id: _id,
               owner: owner
           });
       })
@@ -50,7 +52,7 @@ class ProjectDetails extends Component {
     const { params } = this.props.match;
     axios.delete(`http://localhost:5000/api/projects/${params.id}`, {withCredentials: true})
     .then( () =>{
-        this.props.history.push('/projects'); // !!!         
+        this.props.history.push('/'); // !!!         
     }, (err)=>{
         console.log(err)
     })
@@ -98,7 +100,7 @@ class ProjectDetails extends Component {
 
 
         
-        <Link to={'/projects'}>Back to projects</Link>
+        <Link to={'/'}>Back home</Link>
       </div>
     )
   }

@@ -20,8 +20,6 @@ import AuthService from '../auth/auth-service'
           <div>
             <p>Welcome {this.props.user.username}</p>
             <br />
-            <Link to="/projects">Projects</Link>
-            <br/>
             <Link to='/'>
                 <button onClick={() => this.logoutUser()}>Logout</button>
             </Link>
