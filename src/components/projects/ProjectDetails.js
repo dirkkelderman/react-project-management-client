@@ -12,7 +12,8 @@ class ProjectDetails extends Component {
       title: "",
       description: "",
       _id:'',
-      owner: ""
+      owner: "",
+      imageUrl: ""
     }
   }
  
@@ -25,12 +26,13 @@ class ProjectDetails extends Component {
       axios.get(`http://localhost:5000/api/projects/${params.id}`, {withCredentials: true})
       .then( responseFromApi =>{
 
-          const {title, description, owner, _id} = responseFromApi.data;
+          const {title, description, owner, _id, imageUrl} = responseFromApi.data;
           this.setState({
               title: title,
               description: description,
               _id: _id,
-              owner: owner
+              owner: owner,
+              imageUrl: imageUrl
           });
       })
       .catch((err)=>{
@@ -71,6 +73,7 @@ class ProjectDetails extends Component {
   render(){
     return(
       <div>
+        <img src={this.state.imageUrl} alt={this.state.title}/>
         <h1>{this.state.title}</h1>
         <p>{this.state.description}</p>
 
