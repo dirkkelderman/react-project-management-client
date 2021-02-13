@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import ProjectList from './components/projects/ProjectList'
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import ProjectDetails from './components/projects/ProjectDetails';
 import TaskDetails from './components/tasks/TaskDetails'
 import Signup from './components/auth/Signup';
@@ -26,10 +26,19 @@ class App extends React.Component {
     <Navbar user={this.state.loggedInUser} getUser={this.getTheUser}/>
     
     <Switch>
-      <Route exact path="/signup" render={() => <Signup getUser={this.getTheUser}/>} />
       <Route exact path='/' render={() => <Login getUser={this.getTheUser}/>}/>
-      <Route exact path='/projects' component={ProjectList} />
-      <Route path="/projects/:id" render={ (props) => <ProjectDetails {...props} user={this.state.loggedInUser} /> } />
+      <Route exact path="/signup" render={() => <Signup getUser={this.getTheUser}/>} />
+      
+      <Route exact path='/projects'> 
+        {this.state.loggedInUser ? <ProjectList/> : <Redirect to='/' /> }
+      </Route>
+      
+      <Route exact path="/projects/:id" render={ (props) => { 
+        return this.state.loggedInUser ? 
+        <ProjectDetails {...props} user={this.state.loggedInUser} /> :
+        <Redirect to='/' />
+      }} />   
+      
       <Route exact path="/projects/:id/tasks/:taskId" component={TaskDetails} /> 
 
     </Switch>
